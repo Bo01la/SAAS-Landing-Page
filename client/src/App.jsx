@@ -1,8 +1,10 @@
+import Header from "./sections/Header";
+
 function App() {
   return (
-    <>
-      <h1 className="small-2 ">hello world</h1>
-    </>
+    <main className="overflow-hidden">
+      <Header />
+    </main>
   );
 }
 
