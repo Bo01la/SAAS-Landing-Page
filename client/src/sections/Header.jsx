@@ -1,3 +1,5 @@
+import { useState } from "react";
+import clsx from "clsx";
 import { Link as LinkScroll } from "react-scroll";
 
 const NavLink = ({ title }) => (
@@ -7,6 +9,7 @@ const NavLink = ({ title }) => (
 );
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="fixed top-0 left-0 z-50 w-full py-10">
       <div className="container flex h-14 items-center max-lg:px-5">
@@ -19,7 +22,12 @@ const Header = () => {
           />
         </a>
 
-        <div className="w-full max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:w-full max-lg:bg-s2 max-lg:opacity-0">
+        <div
+          className={clsx(
+            "w-full max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:w-full max-lg:bg-s2 max-lg:opacity-0",
+            isOpen ? "max-lg:opacity-100" : "max-lg:pointer-events-none"
+          )}
+        >
           <div className="max-lg:relative max-lg:flex max-lg:flex-col max-lg:min-h-screen max-lg:p-6 max-lg:overflow-hidden sidebar-before max-md:px-4 ">
             <nav className="max-lg:relative max-lg:z-2 max-lg:my-auto ">
               <ul className="flex max-lg:block max-lg:ps-12 ">
@@ -30,7 +38,15 @@ const Header = () => {
                 </li>
 
                 <li className="nav-logo">
-                  <LinkScroll>
+                  <LinkScroll
+                    to="hero"
+                    offset={-100}
+                    spy
+                    smooth
+                    className={clsx(
+                      "max-lg:hidden transition-transform duration-500 cursor-pointer"
+                    )}
+                  >
                     <img
                       src="/images/xora.svg"
                       width={160}
@@ -47,8 +63,34 @@ const Header = () => {
                 </li>
               </ul>
             </nav>
+            <div className="lg:hidden block absolute top-1/2 left-0 w-[960px] h-[380px] translate-[-290px] -translate-y-1/2 rotate-90">
+              <img
+                src="/images/bg-outlines.svg"
+                alt="background1"
+                width={960}
+                height={380}
+                className="relative z-2"
+              />
+              <img
+                src="/images/bg-outlines-fill.png"
+                alt="background2"
+                width={960}
+                height={380}
+                className="absolute inset-0 mix-blend-soft-light opacity-5"
+              />
+            </div>
           </div>
         </div>
+        <button
+          className="lg:hidden z-2 size-10 border-2 border-s4/25 rounded-full flex justify-center items-center"
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          <img
+            src={`/images/${isOpen ? "close" : "magic"}.svg`}
+            alt="burger menu"
+            className="size-1/2 object-contain"
+          />
+        </button>
       </div>
     </header>
   );
