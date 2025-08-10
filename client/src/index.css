@@ -12,6 +12,18 @@ To define your design system in Tailwind CSS v4:
 5- Use `@layer utilities` to define custom classes that apply your tokens or composed styles (e.g., `.caption` applies `@apply small-2`, which was defined with `@utility`).
 
 Based on the above, no need for tailwind.config.js any more
+
+***************IMPORTAN NOTE:***************
+When Tailwind compiles custom CSS classes that are written outside of Tailwind’s layering system (e.g., plain .h1 { ... } in your CSS), those rules often appear after Tailwind’s generated utility classes in the compiled CSS file.
+Because they have the same specificity (one class selector) but are defined later, they override built-in utilities and can break responsive variants.
+
+To prevent this, we use Tailwind’s @utility directive:
+@utility h1 {
+  @apply text-[84px] font-black leading-[84px];
+}
+This tells Tailwind to register our custom class in the correct layer and order, so it behaves like any other utility — meaning responsive prefixes (max-lg:h1, lg:h1, etc.) work as expected without being overridden.
+
+We applied this fix to our typography classes (h1, h2, h3, …).
 */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -130,6 +142,65 @@ Based on the above, no need for tailwind.config.js any more
   @apply text-[16px] font-bold leading-[24px];
 }
 
+/* Start Typography test */
+@utility h-num {
+  @apply font-inter text-[72px] font-bold leading-[84px];
+}
+
+@utility h1 {
+  @apply text-[84px] font-black leading-[84px] tracking-[-0.03em];
+}
+
+@utility h2 {
+  @apply text-[64px] font-black leading-[64px];
+}
+
+@utility h3 {
+  @apply text-[48px] font-semibold leading-[56px] tracking-[-0.02em];
+}
+
+@utility h4 {
+  @apply text-[40px] font-semibold leading-[52px];
+}
+
+@utility h5 {
+  @apply text-[32px] font-semibold leading-[40px];
+}
+
+@utility h6 {
+  @apply text-[24px] font-medium leading-[36px];
+}
+
+@utility body-1 {
+  @apply text-[22px] leading-[36px];
+}
+
+@utility body-2 {
+  @apply text-[18px] font-semibold leading-[32px];
+}
+
+@utility body-3 {
+  @apply text-[16px] leading-[28px] tracking-[0.02em];
+}
+
+@utility base {
+  @apply text-[16px] font-medium leading-[24px] tracking-[0.03em];
+}
+
+@utility base-small {
+  @apply text-[14px] font-semibold leading-[18px] tracking-[0.03em];
+}
+
+@utility small-1 {
+  @apply text-[14px] font-semibold leading-[18px] tracking-[0.03em];
+}
+
+@utility small-compact {
+  @apply text-[12px] font-semibold leading-[18px] tracking-[0.03em];
+}
+
+/* End Typography test */
+
 @layer base {
   html {
     @apply bg-s1;
@@ -157,8 +228,7 @@ Based on the above, no need for tailwind.config.js any more
 }
 
 @layer utilities {
-  /* START of Typography */
-  .h-num {
+  /* .h-num {
     @apply font-inter text-[72px] font-bold leading-[84px];
   }
 
@@ -212,9 +282,8 @@ Based on the above, no need for tailwind.config.js any more
 
   .small-compact {
     @apply text-[12px] font-semibold leading-[18px] tracking-[0.03em];
-  }
+  } */
 
-  /* END of Typography */
   /* START of Gradients */
 
   .g2 {
