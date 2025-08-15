@@ -155,7 +155,7 @@ We applied this fix to our typography classes (h1, h2, h3, …).
   @apply text-[64px] font-black leading-[64px];
 }
 
-@utility h3 {
+@utility pricing-bg {
   @apply text-[48px] font-semibold leading-[56px] tracking-[-0.02em];
 }
 
