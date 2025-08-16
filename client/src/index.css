@@ -422,7 +422,12 @@ We applied this fix to our typography classes (h1, h2, h3, …).
   }
 
   .faq-icon {
-    @apply before:absolute before:h-0.5 before:w-3 before:bg-p3 before:content-[''] after:absolute after:h-0.5 after:w-3 after:rotate-90 after:bg-p3 after:transition-all after:duration-500 after:content-[''];
+    @apply relative
+      before:absolute before:h-0.5 before:w-3 before:bg-p3 before:content-['']
+      before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
+      after:absolute  after:h-0.5 after:w-3 after:bg-p3 after:content-['']
+      after:left-1/2  after:top-1/2  after:-translate-x-1/2  after:-translate-y-1/2
+      after:transition-transform after:duration-500;
   }
 
   /* END of FAQ */
